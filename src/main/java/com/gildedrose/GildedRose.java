@@ -18,9 +18,7 @@ class GildedRose {
         for (Item item : items) {
             if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASS)) {
                 if (item.quality > MIN_QUALITY) {
-                    if (!item.name.equals(SULFURAS)) {
-                        subtractQuality(item);
-                    }
+                    subtractQuality(item);
                 }
             } else {
                 if (item.quality < MAX_QUALITY) {
@@ -48,9 +46,7 @@ class GildedRose {
                 if (!item.name.equals(AGED_BRIE)) {
                     if (!item.name.equals(BACKSTAGE_PASS)) {
                         if (item.quality > MIN_QUALITY) {
-                            if (!item.name.equals(SULFURAS)) {
-                                subtractQuality(item);
-                            }
+                            subtractQuality(item);
                         }
                     } else {
                         item.quality = MIN_QUALITY;
@@ -76,6 +72,10 @@ class GildedRose {
     }
 
     private void subtractQuality(Item item) {
+        if (item.name.equals(SULFURAS)) {
+            return;
+        }
+
         item.quality = item.quality - 1;
     }
 }
