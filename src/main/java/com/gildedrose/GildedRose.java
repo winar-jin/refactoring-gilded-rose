@@ -21,23 +21,12 @@ class GildedRose {
     }
 
     private void updateQualitySingle(Item item) {
-        if (!increaseQualityAfterSellIn(item) && !qualityBeZeroAfterSellIn(item)) {
-            subtractQuality(item);
-        } else {
+        if (specialItem(item)) {
             increaseQuality(item);
-
-            if (qualityBeZeroAfterSellIn(item)) {
-                if (item.sell_in < 11) {
-                    increaseQuality(item);
-                }
-
-                if (item.sell_in < 6) {
-                    increaseQuality(item);
-                }
-            }
         }
 
-        subtractSellInData(item);
+        subtractQuality(item);
+        subtractSellIn(item);
 
         if (greaterThanMinSellIn(item)) {
             return;
@@ -52,6 +41,10 @@ class GildedRose {
         }
 
         subtractQuality(item);
+    }
+
+    private boolean specialItem(Item item) {
+        return increaseQualityAfterSellIn(item) || qualityBeZeroAfterSellIn(item);
     }
 
     private boolean qualityBeZeroAfterSellIn(Item item) {
@@ -70,8 +63,8 @@ class GildedRose {
         return item.quality >= MAX_QUALITY;
     }
 
-    private void subtractSellInData(Item item) {
-        if (noSellInDataWithSameQuality(item)) {
+    private void subtractSellIn(Item item) {
+        if (noSellInWithSameQuality(item)) {
             return;
         }
         item.sell_in = item.sell_in - 1;
@@ -85,7 +78,7 @@ class GildedRose {
     }
 
     private void subtractQuality(Item item) {
-        if (noSellInDataWithSameQuality(item) || noQuality(item)) {
+        if (noSellInWithSameQuality(item) || noQuality(item)) {
             return;
         }
 
@@ -96,7 +89,7 @@ class GildedRose {
         return item.quality <= MIN_QUALITY;
     }
 
-    private boolean noSellInDataWithSameQuality(Item item) {
+    private boolean noSellInWithSameQuality(Item item) {
         return item.name.equals(SULFURAS);
     }
 }
