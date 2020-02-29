@@ -17,9 +17,7 @@ class GildedRose {
     public void updateQuality() {
         for (Item item : items) {
             if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASS)) {
-                if (item.quality > MIN_QUALITY) {
-                    subtractQuality(item);
-                }
+                subtractQuality(item);
             } else {
                 if (item.quality < MAX_QUALITY) {
                     increaseQuality(item);
@@ -45,9 +43,7 @@ class GildedRose {
             if (item.sell_in < MIN_SELLIN) {
                 if (!item.name.equals(AGED_BRIE)) {
                     if (!item.name.equals(BACKSTAGE_PASS)) {
-                        if (item.quality > MIN_QUALITY) {
-                            subtractQuality(item);
-                        }
+                        subtractQuality(item);
                     } else {
                         item.quality = MIN_QUALITY;
                     }
@@ -72,11 +68,15 @@ class GildedRose {
     }
 
     private void subtractQuality(Item item) {
-        if (noSellInDataWithSameQuality(item)) {
+        if (noSellInDataWithSameQuality(item) || noQuality(item)) {
             return;
         }
 
         item.quality = item.quality - 1;
+    }
+
+    private boolean noQuality(Item item) {
+        return item.quality <= MIN_QUALITY;
     }
 
     private boolean noSellInDataWithSameQuality(Item item) {
