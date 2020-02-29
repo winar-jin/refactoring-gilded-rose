@@ -8,6 +8,7 @@ class GildedRose {
     private final String SULFURAS = "Sulfuras, Hand of Ragnaros";
     private final int MAX_QUALITY = 50;
     private final int MIN_QUALITY = 0;
+    private final int MIN_SELLIN = 0;
 
     public GildedRose(Item[] items) {
         this.items = items;
@@ -45,7 +46,7 @@ class GildedRose {
                 item.sell_in = item.sell_in - 1;
             }
 
-            if (item.sell_in < MIN_QUALITY) {
+            if (item.sell_in < MIN_SELLIN) {
                 if (!item.name.equals(AGED_BRIE)) {
                     if (!item.name.equals(BACKSTAGE_PASS)) {
                         if (item.quality > MIN_QUALITY) {
@@ -54,7 +55,7 @@ class GildedRose {
                             }
                         }
                     } else {
-                        item.quality = item.quality - item.quality;
+                        item.quality = MIN_QUALITY;
                     }
                 } else {
                     if (item.quality < MAX_QUALITY) {
