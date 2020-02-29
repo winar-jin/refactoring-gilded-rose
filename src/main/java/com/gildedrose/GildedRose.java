@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import java.util.Arrays;
+
 class GildedRose {
     Item[] items;
 
@@ -15,37 +17,49 @@ class GildedRose {
     }
 
     public void updateQuality() {
-        for (Item item : items) {
-            if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASS)) {
-                subtractQuality(item);
-            } else {
-                increaseQuality(item);
+        Arrays.stream(this.items).forEach(this::updateQualitySingle);
+    }
 
-                if (item.name.equals(BACKSTAGE_PASS)) {
-                    if (item.sell_in < 11) {
-                        increaseQuality(item);
-                    }
+    private void updateQualitySingle(Item item) {
+        if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASS)) {
+            subtractQuality(item);
+        } else {
+            increaseQuality(item);
 
-                    if (item.sell_in < 6) {
-                        increaseQuality(item);
-                    }
+            if (item.name.equals(BACKSTAGE_PASS)) {
+                if (item.sell_in < 11) {
+                    increaseQuality(item);
                 }
-            }
 
-            subtractSellInData(item);
-
-            if (item.sell_in < MIN_SELLIN) {
-                if (!item.name.equals(AGED_BRIE)) {
-                    if (!item.name.equals(BACKSTAGE_PASS)) {
-                        subtractQuality(item);
-                    } else {
-                        item.quality = MIN_QUALITY;
-                    }
-                } else {
+                if (item.sell_in < 6) {
                     increaseQuality(item);
                 }
             }
         }
+
+        subtractSellInData(item);
+
+        if (greaterThanMinSellIn(item)) {
+            return;
+        }
+
+        if (increaseQualityAfterSellIn(item)) {
+            increaseQuality(item);
+        }
+
+        if (!item.name.equals(BACKSTAGE_PASS)) {
+            subtractQuality(item);
+        } else {
+            item.quality = MIN_QUALITY;
+        }
+    }
+
+    private boolean increaseQualityAfterSellIn(Item item) {
+        return item.name.equals(AGED_BRIE);
+    }
+
+    private boolean greaterThanMinSellIn(Item item) {
+        return item.sell_in >= MIN_SELLIN;
     }
 
     private boolean greaterThanMaxQuality(Item item) {
