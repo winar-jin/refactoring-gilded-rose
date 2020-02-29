@@ -21,12 +21,12 @@ class GildedRose {
     }
 
     private void updateQualitySingle(Item item) {
-        if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASS)) {
+        if (!increaseQualityAfterSellIn(item) && !qualityBeZeroAfterSellIn(item)) {
             subtractQuality(item);
         } else {
             increaseQuality(item);
 
-            if (item.name.equals(BACKSTAGE_PASS)) {
+            if (qualityBeZeroAfterSellIn(item)) {
                 if (item.sell_in < 11) {
                     increaseQuality(item);
                 }
@@ -47,11 +47,15 @@ class GildedRose {
             increaseQuality(item);
         }
 
-        if (!item.name.equals(BACKSTAGE_PASS)) {
-            subtractQuality(item);
-        } else {
+        if (qualityBeZeroAfterSellIn(item)) {
             item.quality = MIN_QUALITY;
         }
+
+        subtractQuality(item);
+    }
+
+    private boolean qualityBeZeroAfterSellIn(Item item) {
+        return item.name.equals(BACKSTAGE_PASS);
     }
 
     private boolean increaseQualityAfterSellIn(Item item) {
