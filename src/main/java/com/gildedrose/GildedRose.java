@@ -11,7 +11,7 @@ class GildedRose {
         this.items = items;
     }
 
-    public void update_quality() {
+    public void updateQuality() {
         for (Item item : items) {
             if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASS)) {
                 if (item.quality > 0) {
