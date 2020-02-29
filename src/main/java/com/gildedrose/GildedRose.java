@@ -18,23 +18,23 @@ class GildedRose {
             if (!item.name.equals(AGED_BRIE) && !item.name.equals(BACKSTAGE_PASS)) {
                 if (item.quality > MIN_QUALITY) {
                     if (!item.name.equals(SULFURAS)) {
-                        item.quality = item.quality - 1;
+                        subtractQuality(item);
                     }
                 }
             } else {
                 if (item.quality < MAX_QUALITY) {
-                    item.quality = item.quality + 1;
+                    increaseQuality(item);
 
                     if (item.name.equals(BACKSTAGE_PASS)) {
                         if (item.sell_in < 11) {
                             if (item.quality < MAX_QUALITY) {
-                                item.quality = item.quality + 1;
+                                increaseQuality(item);
                             }
                         }
 
                         if (item.sell_in < 6) {
                             if (item.quality < MAX_QUALITY) {
-                                item.quality = item.quality + 1;
+                                increaseQuality(item);
                             }
                         }
                     }
@@ -50,7 +50,7 @@ class GildedRose {
                     if (!item.name.equals(BACKSTAGE_PASS)) {
                         if (item.quality > MIN_QUALITY) {
                             if (!item.name.equals(SULFURAS)) {
-                                item.quality = item.quality - 1;
+                                subtractQuality(item);
                             }
                         }
                     } else {
@@ -58,10 +58,18 @@ class GildedRose {
                     }
                 } else {
                     if (item.quality < MAX_QUALITY) {
-                        item.quality = item.quality + 1;
+                        increaseQuality(item);
                     }
                 }
             }
         }
+    }
+
+    private void increaseQuality(Item item) {
+        item.quality = item.quality + 1;
+    }
+
+    private void subtractQuality(Item item) {
+        item.quality = item.quality - 1;
     }
 }
