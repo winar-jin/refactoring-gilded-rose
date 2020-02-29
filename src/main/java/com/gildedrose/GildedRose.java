@@ -61,7 +61,7 @@ class GildedRose {
     }
 
     private void subtractSellInData(Item item) {
-        if (item.name.equals(SULFURAS)) {
+        if (noSellInDataWithSameQuality(item)) {
             return;
         }
         item.sell_in = item.sell_in - 1;
@@ -72,10 +72,14 @@ class GildedRose {
     }
 
     private void subtractQuality(Item item) {
-        if (item.name.equals(SULFURAS)) {
+        if (noSellInDataWithSameQuality(item)) {
             return;
         }
 
         item.quality = item.quality - 1;
+    }
+
+    private boolean noSellInDataWithSameQuality(Item item) {
+        return item.name.equals(SULFURAS);
     }
 }
