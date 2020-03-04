@@ -19,7 +19,7 @@ public class Item {
         return this.name + ", " + this.sell_in + ", " + this.quality;
     }
 
-    protected void updateQualityAndSellIn() {
+    void updateQualityAndSellIn() {
         updateQuality();
 
         updateSellIn();
@@ -41,17 +41,5 @@ public class Item {
         if (quality > 0) {
             quality = quality - 1;
         }
-    }
-
-    private boolean isSulfuras() {
-        return name.equals("Sulfuras, Hand of Ragnaros");
-    }
-
-    private boolean isBackstage() {
-        return name.equals("Backstage passes to a TAFKAL80ETC concert");
-    }
-
-    private boolean isAgedBrie() {
-        return name.equals("Aged Brie");
     }
 }
