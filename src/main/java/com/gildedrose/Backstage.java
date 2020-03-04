@@ -23,4 +23,11 @@ public class Backstage extends Item {
             }
         }
     }
+
+    @Override
+    protected void updateAfterExpiration() {
+        if (sell_in < 0) {
+            quality = 0;
+        }
+    }
 }

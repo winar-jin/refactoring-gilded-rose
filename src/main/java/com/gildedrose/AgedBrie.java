@@ -16,4 +16,11 @@ public class AgedBrie extends Item {
     protected void updateSellIn() {
         sell_in = sell_in - 1;
     }
+
+    @Override
+    protected void updateAfterExpiration() {
+        if (quality < 50 && sell_in < 0) {
+            quality = quality + 1;
+        }
+    }
 }
