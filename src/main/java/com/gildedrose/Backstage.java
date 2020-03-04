@@ -10,13 +10,13 @@ public class Backstage extends Item {
         if (quality < 50) {
             quality = quality + 1;
 
-            if (sell_in < 11) {
+            if (sellIn < 11) {
                 if (quality < 50) {
                     quality = quality + 1;
                 }
             }
 
-            if (sell_in < 6) {
+            if (sellIn < 6) {
                 if (quality < 50) {
                     quality = quality + 1;
                 }
@@ -26,7 +26,7 @@ public class Backstage extends Item {
 
     @Override
     protected void updateAfterExpiration() {
-        if (sell_in < 0) {
+        if (sellIn < 0) {
             quality = 0;
         }
     }
