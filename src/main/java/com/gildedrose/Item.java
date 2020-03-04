@@ -19,7 +19,41 @@ public class Item {
         return this.name + ", " + this.sell_in + ", " + this.quality;
     }
 
-    protected void updateQuality() {
+    protected void updateQualityAndSellIn() {
+        updateQuality();
+
+        updateSellIn();
+
+        updateAfterExpiration();
+    }
+
+    private void updateAfterExpiration() {
+        if (sell_in < 0) {
+            if (!isAgedBrie()) {
+                if (!isBackstage()) {
+                    if (quality > 0) {
+                        if (!isSulfuras()) {
+                            quality = quality - 1;
+                        }
+                    }
+                } else {
+                    quality = 0;
+                }
+            } else {
+                if (quality < 50) {
+                    quality = quality + 1;
+                }
+            }
+        }
+    }
+
+    private void updateSellIn() {
+        if (!isSulfuras()) {
+            sell_in = sell_in - 1;
+        }
+    }
+
+    private void updateQuality() {
         if (isAgedBrie() || isBackstage()) {
             if (quality < 50) {
                 quality = quality + 1;
@@ -42,28 +76,6 @@ public class Item {
             if (quality > 0) {
                 if (!isSulfuras()) {
                     quality = quality - 1;
-                }
-            }
-        }
-
-        if (!isSulfuras()) {
-            sell_in = sell_in - 1;
-        }
-
-        if (sell_in < 0) {
-            if (!isAgedBrie()) {
-                if (!isBackstage()) {
-                    if (quality > 0) {
-                        if (!isSulfuras()) {
-                            quality = quality - 1;
-                        }
-                    }
-                } else {
-                    quality = 0;
-                }
-            } else {
-                if (quality < 50) {
-                    quality = quality + 1;
                 }
             }
         }
