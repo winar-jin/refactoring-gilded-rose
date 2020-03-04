@@ -47,14 +47,15 @@ public class Item {
         }
     }
 
-    private void updateSellIn() {
-        if (!isSulfuras()) {
-            sell_in = sell_in - 1;
+    protected void updateSellIn() {
+        if (isSulfuras()) {
+            return;
         }
+        sell_in = sell_in - 1;
     }
 
-    private void updateQuality() {
-        if (isAgedBrie() || isBackstage()) {
+    protected void updateQuality() {
+        if (isBackstage()) {
             if (quality < 50) {
                 quality = quality + 1;
 
